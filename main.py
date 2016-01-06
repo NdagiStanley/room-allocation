@@ -1,5 +1,9 @@
-from model import Office, LivingSpace
+# I'm using the two lines below to test. Comment them out then run to use
+# import ipdb
+# ipdb.set_trace()
+
 """importing from model.py"""
+from model import Office, LivingSpace
 
 """
 The following are lists
@@ -25,7 +29,9 @@ class Building(object):
             #class we are dealing with is Office that requires name
             results = [Office(name) for name in office_names] #list of offices (objects)
 
-        return [i.name for i in results]
+        # return [type (i) for i in results] #confirms that the rooms are populated and are classes
+        return [i.name for i in results] #prints out the name attribute of the rooms
+
 
 if __name__ == '__main__':
     amity = Building()
