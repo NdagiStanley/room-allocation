@@ -3,7 +3,9 @@
 # ipdb.set_trace()
 
 """importing from model.py"""
-from model import Office, LivingSpace
+from model import Office, LivingSpace, Fellow, Staff
+
+import random
 
 """
 The following are lists
@@ -21,6 +23,10 @@ class Building(object):
         self.office_names = office_names
         self.offices = self.pre_populate("office")
         self.living_spaces = self.pre_populate("ls")
+        self.employee = self.access_employees()[0]
+        self.staff = self.access_employees()[1]
+        self.fellow = self.access_employees()[2]
+
 
     def pre_populate(self, type_of_room):
         rooms = []
@@ -32,5 +38,30 @@ class Building(object):
             rooms = [Office(name) for name in office_names] #list of offices (objects)
 
         # return [type (i) for i in results] #confirms that the rooms are populated and are classes
-        #return [i.name for i in rooms] #prints out the name attribute of the rooms
+        #return [i.max_occupants for i in rooms] #prints out the name attribute of the rooms
         return rooms
+
+    def allocate_office(self, person):
+        """Allocates the room receiving randomized room and randomized person"""
+
+    def access_employees(self):
+        """Access the people in file"""
+        employees = []
+        fellows = []
+        staff = []
+        with open("employees.txt") as f:
+            content = f.read().splitlines() #contents in one list
+        f.close()
+        for x in xrange(1,len(content)):
+            person = content[x].split('.')[0].split() #each line as a list, then split it into words as iems in list
+            """Create Person with the items as arguments, the first two join to make one name"""
+            if person[2] == 'Fellow':
+                employee = Fellow(person[0] + " " + person[1], person[3])
+                fellows.append(employee)
+            elif person[2] == 'Staff':
+                employee = Staff(person[0] + " " + person[1])
+                staff.append(employee)
+            employees.append(employee)
+        random.shuffle(employees)
+        """returns a list of all employees, call either of the indices to have a list of them"""
+        return [employees, staff, fellows]

@@ -8,19 +8,45 @@ sys.path.insert(0, parentdir)
 
 import unittest
 from main import Building
+from model import Person, Staff
 
 class Test(unittest.TestCase):
     """docstring for ClassName"""
+    amity = Building()
 
-    def test_pre_populate(self):
+    def test_can_pre_populate(self):
         """
         Test if offices and living space can be prepopulated
         """
-        self.amity = Building()
         self.assertEquals('Shire', self.amity.offices[4].name)
         self.assertEquals(len(self.amity.offices), 10)
         self.assertEquals('Rm1', self.amity.living_spaces[0].name)
         self.assertEquals(len(self.amity.living_spaces), 10)
+
+    # def test_is_printing_details(self):
+    #     """
+    #     Test if Room details are being printed
+    #     """
+    #     pass
+
+    def test_can_access_employees_from_input(self):
+        """
+        Tests if employee details in input file are accessed and objects created
+        """
+        self.assertIsNotNone(self.amity.employee)
+        self.assertIsInstance(self.amity.employee[0], Person)
+        self.assertEqual('<type \'str\'>', str(type(self.amity.employee[0].name)))
+
+
+    def test_employees_entities_are_valid(self):
+    	"""
+    	Tests if the types of employees are correct the Y or N are taken in for fellow
+    	"""
+    	self.assertIsInstance(self.amity.staff[0], Staff)
+        self.assertEqual('N' or 'Y', self.amity.fellow[0].is_interested)
+
+
+
 
 if __name__ == '__main__':
     unittest.main()
