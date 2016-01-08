@@ -35,26 +35,39 @@ class Test(unittest.TestCase):
         """
         self.assertIsNotNone(self.amity.employee)
         self.assertIsInstance(self.amity.employee[0], Person)
-        self.assertEqual('<type \'str\'>', str(type(self.amity.employee[0].name)))
+        self.assertEquals('<type \'str\'>', str(type(self.amity.employee[0].name)))
 
 
     def test_employees_entities_are_valid(self):
-    	"""
-    	Tests if the types of employees are correct the Y or N are taken in for fellow
-    	"""
-    	self.assertIsInstance(self.amity.staff[0], Staff)
-        self.assertEqual('N' or 'Y', self.amity.fellow[0].is_interested)
+        """
+        Tests if the types of employees are correct the Y or N are taken in for fellow
+        """
+        self.assertIsInstance(self.amity.staff[0], Staff)
+        self.assertEquals('N' or 'Y', self.amity.fellow[0].is_interested)
 
 
     def test_allocate_room(self):
-    	"""
+        """
         Tests if the allocation of room works receiving randomized room and randomized person
-    	"""
-    	self.assertIsNotNone(self.amity.allocate_room(self.amity.employee, self.amity.offices).keys())
-    	self.assertIsInstance(self.amity.offices[0], Office)
-    	self.assertIsInstance(self.amity.living_spaces[0], LivingSpace)
+        """
+        self.assertIsNotNone(self.amity.allocate_room(self.amity.employee, self.amity.offices).keys())
+        self.assertIsInstance(self.amity.offices[0], Office)
+        self.assertIsInstance(self.amity.living_spaces[0], LivingSpace)
 
-     #    self.assertEqual('N' or 'Y', self.amity.fellow[0].is_interested)
+
+    def test_print_room_allocation(self):
+        """
+        Tests if the allocation of room is presented in the stipulated format:
+        ROOM 1 (OFFICE)
+        MEMBER 1, MEMBER 2, MEMBER 3
+        """
+        self.assertEquals('<type \'str\'>', str(type(self.amity.allocated_office_names[0])))
+        # self.assertIsInstance(self.amity.allocated_office, Office)
+        # self.assertEquals('<type \'list\'>', str(type(self.amity.allocated_office_members)))
+
+
+
+        # self.assertEquals('<type \'str\'>', str(type(self.amity.allocated_office_name[0])))
 
 
 
