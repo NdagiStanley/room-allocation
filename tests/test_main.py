@@ -8,7 +8,7 @@ sys.path.insert(0, parentdir)
 
 import unittest
 from main import Building
-from model import Person, Staff
+from model import Person, Staff, Office, LivingSpace
 
 class Test(unittest.TestCase):
     """docstring for ClassName"""
@@ -44,6 +44,17 @@ class Test(unittest.TestCase):
     	"""
     	self.assertIsInstance(self.amity.staff[0], Staff)
         self.assertEqual('N' or 'Y', self.amity.fellow[0].is_interested)
+
+
+    def test_allocate_room(self):
+    	"""
+        Tests if the allocation of room works receiving randomized room and randomized person
+    	"""
+    	self.assertIsNotNone(self.amity.allocate_room(self.amity.employee, self.amity.offices).keys())
+    	self.assertIsInstance(self.amity.offices[0], Office)
+    	self.assertIsInstance(self.amity.living_spaces[0], LivingSpace)
+
+     #    self.assertEqual('N' or 'Y', self.amity.fellow[0].is_interested)
 
 
 
