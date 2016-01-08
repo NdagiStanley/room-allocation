@@ -13,7 +13,7 @@ To clone the repo ```git clone https://github.com/andela-sndagi/room-allocation.
 2. RUN
 ```$ python sample/sample.py ```
 3. TEST
-```$ python nosetests```
+```$ nosetests```
 4. Check the COVERAGE of the tests
 ```coverage run tests/test_main.py```
 ```coverage report```
