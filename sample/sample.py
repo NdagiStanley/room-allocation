@@ -1,3 +1,12 @@
+# !/usr/bin/python
+# title          :main.py
+# description    :Allocates persons to rooms in a building
+# author         :Stanley Ndagi
+# email          :stanley.ndagi@andela.com
+# date           :20160108
+# version        :0.0.1
+# python_version :2.7.10
+# ==============================================================================
 import os
 import sys
 import inspect
@@ -8,21 +17,7 @@ sys.path.insert(0, parentdir)
 
 from main import Building
 
+
 if __name__ == '__main__':
     amity = Building()
-    # print amity.living_spaces[2].name + "\t\t  amity.living_spaces[2].name"
-    # print amity.offices[1].name + "\t\t  amity.offices[1].name"
-    # # print amity.rooms()
-    # print amity.employee[1].name + "\t  employee[1].name"
-    # print amity.staff[2].name + "\t  amity.staff[2].name"
-    # print str(type(amity.fellow[3].name)) + "\t  str(type(amity.fellow[3].name))"
-    # print amity.fellow[4].is_interested + "\t\t  amity.fellow[4].is_interested"
-    # print amity.allocated_office.occupants
-    # print type(amity.allocate_room(amity.fellow, amity.living_spaces).values()[0])
-    # print amity.allocate_room(amity.employee, amity.offices) # allocated room is returned
-    #print amity.allocated_office.occupants
     amity.print_room_allocation()
-    # print amity.allocated_office_names[11]
-
-
-

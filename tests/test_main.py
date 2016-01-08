@@ -23,12 +23,6 @@ class Test(unittest.TestCase):
         self.assertEquals('Rm1', self.amity.living_spaces[0].name)
         self.assertEquals(len(self.amity.living_spaces), 10)
 
-    # def test_is_printing_details(self):
-    #     """
-    #     Test if Room details are being printed
-    #     """
-    #     pass
-
     def test_can_access_employees_from_input(self):
         """
         Tests if employee details in input file are accessed and objects created
@@ -37,14 +31,12 @@ class Test(unittest.TestCase):
         self.assertIsInstance(self.amity.employee[0], Person)
         self.assertEquals('<type \'str\'>', str(type(self.amity.employee[0].name)))
 
-
     def test_employees_entities_are_valid(self):
         """
         Tests if the types of employees are correct the Y or N are taken in for fellow
         """
         self.assertIsInstance(self.amity.staff[0], Staff)
-        self.assertEquals('N' or 'Y', self.amity.fellow[0].is_interested)
-
+        self.assertEquals('Y' or 'N', self.amity.fellow[0].is_interested)
 
     def test_allocate_room(self):
         """
@@ -54,7 +46,6 @@ class Test(unittest.TestCase):
         self.assertIsInstance(self.amity.offices[0], Office)
         self.assertIsInstance(self.amity.living_spaces[0], LivingSpace)
 
-
     def test_print_room_allocation(self):
         """
         Tests if the allocation of room is presented in the stipulated format:
@@ -62,14 +53,6 @@ class Test(unittest.TestCase):
         MEMBER 1, MEMBER 2, MEMBER 3
         """
         self.assertEquals('<type \'str\'>', str(type(self.amity.allocated_office_names[0])))
-        # self.assertIsInstance(self.amity.allocated_office, Office)
-        # self.assertEquals('<type \'list\'>', str(type(self.amity.allocated_office_members)))
-
-
-
-        # self.assertEquals('<type \'str\'>', str(type(self.amity.allocated_office_name[0])))
-
-
 
 
 if __name__ == '__main__':
