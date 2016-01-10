@@ -20,4 +20,8 @@ from main import Building
 
 if __name__ == '__main__':
     amity = Building()
-    amity.print_room_allocation()
+    # print amity.get_list_of_office_allocations()
+    # print "\n"
+    # print amity.get_list_of_living_space_allocations()
+    amity.print_office_allocation()
+    amity.print_living_space_allocation()

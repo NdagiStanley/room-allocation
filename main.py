@@ -28,9 +28,9 @@ class Building(object):
         self.office_names = office_names
         self.offices = self.pre_populate("office")
         self.living_spaces = self.pre_populate("ls")
-        self.employee = self.access_employees()[0]
+        self.employees = self.access_employees()[0]
         self.staff = self.access_employees()[1]
-        self.fellow = self.access_employees()[2]
+        self.fellows = self.access_employees()[2]
         self.allocated_office_names = self.office_names
 
 
@@ -56,75 +56,102 @@ class Building(object):
         f.close()
 
         for x in xrange(1, len(content)):
-            # each line as a list, then split it into words as iems in list
+            # Each line as a list, then split it into words as iems in list
             person = content[x].split('.')[0].split()
-            """Create Person with the items as arguments, the first two join to make one name"""
-            if person[2] == 'Fellow':
-                employee = Fellow(person[0] + " " + person[1], person[3])
+            name = person[0] + " " + person[1]
+            role = person[2]
+            #Create Person with the items as arguments, the first two join to make one name
+            if role == 'Fellow':
+                wants_accomodation = person[3]
+                employee = Fellow(name, wants_accomodation)
                 fellows.append(employee)
-            elif person[2] == 'Staff':
-                employee = Staff(person[0] + " " + person[1])
+            elif role == 'Staff':
+                employee = Staff(name)
                 staff.append(employee)
+            else:
+                print "You have not entered details in the format of two names [tab] Fellow / Staff [tab] is_interested"
             employees.append(employee)
         random.shuffle(employees) #For random picking of employees
         random.shuffle(fellows)
-        """returns a list of all employees, call either of the indices to have a list of them"""
+        #Returns a list of all employees, call either of the indices to have a list of them
 
         return [employees, staff, fellows]
 
 
-    def allocate_room(self, employee, room):
-        """Allocates the room receiving randomized room and randomized person"""
-        allocated_room = {} # Holds allocated office
+    def allocate_room(self, employees, room):
+        """Allocates the room receiving randomized person and room type"""
+        allocated_room = {} # Holds allocated room
+        unallocated_employees = []
 
-        for y in xrange(0, len(self.employee)): # len(self.employee)
-            for x in xrange(0, len(room)): # iterates through the offices
-                if not room[x].is_full():
-                    if isinstance(room[x], LivingSpace):
-                        allocated_room.update({room[x].name : LivingSpace.add_person(room[x], employee[y].name)})
+        for emp_index in xrange(0, len(employees)): # len(self.employee)
+            for room_index in xrange(0, len(room)): # iterates through the room
+                if room[room_index].is_full():
+                    unallocated_employees.append(employees[emp_index].name)
+                elif not room[room_index].is_full():
+                    if isinstance(room[room_index], LivingSpace):
+                        allocated_room.update(
+                            {
+                                room[room_index].name : LivingSpace.add_person(room[room_index], employees[emp_index].name)
+                            })
                     else:
-                        allocated_room.update({room[x].name : Office.add_person(room[x], employee[y].name)})
+                        allocated_room.update(
+                            {
+                                room[room_index].name : Office.add_person(room[room_index], employees[emp_index].name)
+                            })
 
                     break
+        # print unallocated_employees
         return allocated_room
 
 
-    def print_room_allocation(self):
-        """Presents the allocation of room in the stipulated format"""
-
-        """Print out the offices first"""
+    def get_list_of_office_allocations(self):
+        """Office Allocations"""
         """
         Below, allocated room is returned
         It is a dictionary with room name as key, list of occupants as values
         NB: The list of occupants is also a list of strings (names of allocated employees)
         """
-        allocated_offices = self.allocate_room(self.employee, self.offices)
-        self.office_names = allocated_offices.keys() # Room names as a list
+        allocated_offices = self.allocate_room(self.employees, self.offices)
+        return allocated_offices
+
+    def get_list_of_living_space_allocations(self):
+        """Living Space Allocations"""
+        """Similar to get_list_of_office_allocations()"""
+        allocated_living_spaces = self.allocate_room(self.fellows, self.living_spaces)
+        return allocated_living_spaces
+
+
+    def print_allocation(self, room_allocation):
+        """Presents the allocation of room in the stipulated format"""
+        allocated_rooms = room_allocation
+        room_names = allocated_rooms.keys() # Room names as a list
+        for room in room_names:
+            print room +" ,",
+        print "\n"
+
+        for room_index in xrange(0, len(room_names)):
+            if room_allocation == self.get_list_of_office_allocations():
+                # Prints Name of office
+                print room_names[room_index].upper() + " (OFFICE)"
+            else:
+                # Prints Name of Living Spaces
+                print room_names[room_index].upper() + " (LIVING SPACE)"
+
+            #Iterate through the dictionary's values (list of occupants)
+            for occupants in allocated_rooms.values()[room_index]:
+                # Prints the elements of occupants
+                print " " + occupants + ",",
+            print ""
+        print "\n"
+
+
+    def print_office_allocation(self):
+        """Print out the offices first"""
         print "Offices allocated: ",
-        for office in office_names:
-            print office +" ,",
-        print "\n"
+        self.print_allocation(self.get_list_of_office_allocations())
 
-        for x in xrange(0, len(office_names)):
-            print office_names[x].upper() + " (OFFICE)" # Prints Name of office
-            """Iterate through the dictionary's values (list of occupants)"""
-            for i in allocated_offices.values()[x]: # Prints the elements of occupants
-                print " " + i + ",",
-            print ""
-        print "\n"
-
+    def print_living_space_allocation(self):
         """Print out the living spaces now"""
-        allocated_living_spaces = self.allocate_room(self.fellow, self.living_spaces)
-        self.living_space_names = allocated_living_spaces.keys() # Room names as a list
         print "Living Spaces allocated: ",
-        for living_spaces in living_space_names:
-            print living_spaces +" ,",
-        print "\n"
-
-        for x in xrange(0, len(living_space_names)):
-            print living_space_names[x].upper() + " (LIVING SPACE)" # Prints Name of office
-            """Iterate through the dictionary's values (list of occupants)"""
-            for i in allocated_living_spaces.values()[x]: # Prints the elements of occupants
-                print " " + i + ",",
-            print ""
+        self.print_allocation(self.get_list_of_living_space_allocations())
 
