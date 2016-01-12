@@ -17,11 +17,12 @@ sys.path.insert(0, parentdir)
 
 from main import Building
 
+living_space_names = ['Rm1', 'Rm2', 'Rm3', 'Rm4', 'Rm5', 'Rm6', 'Rm7', 'Rm8', 'Rm9', 'Rm10']
+office_names = ['Hogwarts', 'Valhalla', 'Oculus', 'Krypton', 'Shire', 'Narnia', 'Camelot', 'Mordor', 'Round Table', 'Midgar']
 
 if __name__ == '__main__':
-    amity = Building()
-    # print amity.get_list_of_office_allocations()
-    # print "\n"
-    # print amity.get_list_of_living_space_allocations()
+    amity = Building(office_names, living_space_names)
     amity.print_office_allocation()
     amity.print_living_space_allocation()
+    amity.print_allocation_for_one_room('Shire')
+    amity.print_allocation_for_one_room('Rm1')

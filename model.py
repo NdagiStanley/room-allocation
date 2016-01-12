@@ -3,10 +3,12 @@
 """
 class Room(object):
     """Room represents a Room in the building"""
+
     def __init__(self, name): #It has to have a name
         self.name = name
         self.max_occupants = 4
         self.occupants = []
+
 
     def add_person(self, person):
         """Adds a member to the room"""
@@ -15,10 +17,14 @@ class Room(object):
 
     def is_full(self):
         """Returns boolean, is the room full?"""
-        if (len(self.occupants) == self.max_occupants):
+        if len(self.occupants) == self.max_occupants:
             return True
         else:
             return False
+
+    def get_occupants(self):
+        """Returns the occupants in a given room"""
+        return self.occupants
 
 
 class Office(Room):
