@@ -30,5 +30,6 @@ if __name__ == '__main__':
     amity = Building(office_names, living_space_names, file_name)
     amity.print_office_allocation()
     amity.print_living_space_allocation()
+    amity.print_unallocated_employees()
     amity.print_allocation_for_one_room('Shire')
     amity.print_allocation_for_one_room('Rm1')

@@ -30,8 +30,9 @@ class Building(object):
         self.offices = self.pre_populate("office")
         self.living_spaces = self.pre_populate("ls")
         self.all_employees = self.access_employees()[0]
-        self.staff = self.access_employees()[1]
-        self.fellows = self.access_employees()[2]
+        self.fellows = self.access_employees()[1]
+        self.office_unallocated = []
+        self.ls_unallocated = []
 
     def pre_populate(self, type_of_room):
         if type_of_room == "ls":
@@ -53,12 +54,17 @@ class Building(object):
         employees = []
         fellows = []
         staff = []
-        with open(self.input_file) as myfile:
-            content = myfile.read().splitlines() #contents in one list
-        myfile.close()
-        for line in xrange(1, len(content)):
+        content = []
+        try:
+            with open(self.input_file) as myfile:
+                content = myfile.readlines() #contents in one list
+        except Exception:
+            print "Some random exception"
+        if len(content) == 0:
+            return False
+        for line in content:
             # Each line as a list, then split it into words as iems in list
-            person = content[line].split('.')[0].split()
+            person = line.split('.')[0].split()
             name = person[0] + " " + person[1]
             role = person[2]
             #Create Person with the items as arguments, the first two join to make one name
@@ -69,35 +75,31 @@ class Building(object):
                     fellows.append(employee)
             elif role == 'Staff':
                 employee = Staff(name)
-                staff.append(employee)
             employees.append(employee)
         random.shuffle(employees) #For random picking of employees
         random.shuffle(fellows)
         #Returns a list of all employees, call either of the indices to have a list of them
-        return [employees, staff, fellows]
+        return [employees, fellows]
 
     def allocate_room(self, employees, room):
         """Allocates the room receiving randomized person and room type"""
         allocated_room = {} # Holds allocated room
+        unallocated = []
         count = 0
         room_index = 0
-        for emp_index in range(0, len(employees)):
+        for employee in employees:
             count += 1
             allocated_room.update(
                 {
-                    room[room_index].name : room[room_index].add_person(employees[emp_index])
+                    room[room_index].name : room[room_index].add_person(employee)
                 })
             if room[room_index].is_full():
                 room_index += 1
                 if room_index >= len(room): #len(room)
-                    print "DISCLAIMER:\nRooms are full\nThe following",
-                    print len(employees) - (emp_index + 1),
-                    print "person(s) have missed slots:"
-                    for emp_index in range((emp_index + 1), len(employees)):
-                        print employees[emp_index].name + ", ",
-                    print "\n"
+                    for employee in employees[count-1:]:
+                        unallocated.append(employee)
                     break
-        return allocated_room
+        return allocated_room, unallocated
 
     def get_list_of_office_allocations(self):
         """
@@ -106,7 +108,7 @@ class Building(object):
         It is a dictionary with room name as key, list of occupants as values
         NB: The list of occupants is also a list of strings (names of allocated employees)
         """
-        allocated_offices = self.allocate_room(self.all_employees, self.offices)
+        allocated_offices, self.office_unallocated = self.allocate_room(self.all_employees, self.offices)
         return allocated_offices
 
     def get_list_of_living_space_allocations(self):
@@ -114,24 +116,24 @@ class Building(object):
         Living Space Allocations
         Similar to get_list_of_office_allocations()
         """
-        allocated_living_spaces = self.allocate_room(self.fellows, self.living_spaces)
+        allocated_living_spaces, self.ls_unallocated = self.allocate_room(self.fellows, self.living_spaces)
         return allocated_living_spaces
 
     def print_allocation(self, allocated_rooms):
         """Presents the allocation of room in the stipulated format"""
         room_names = allocated_rooms.keys()
-        for room_index in xrange(0, len(room_names)):
-            if room_names[room_index] in self.office_names:
+        for room_name in room_names:
+            if room_names in self.office_names:
                 # Prints Name of office
-                print room_names[room_index].upper() + " (OFFICE)"
+                print room_name.upper() + " (OFFICE)"
                 #Iterate through the list of occupants
-                for occupants in allocated_rooms[room_names[room_index]]:
+                for occupants in allocated_rooms[room_name]:
                     print " " + occupants.name + ",",
                 print ""
             else:
                 # Prints Name of Living Spaces
-                print room_names[room_index].upper() + " (LIVING SPACE)"
-                for occupants in allocated_rooms[room_names[room_index]]:
+                print room_name.upper() + " (LIVING SPACE)"
+                for occupants in allocated_rooms[room_name]:
                     print " " + occupants.name + ",",
                 print ""
         print "\n"
@@ -149,11 +151,21 @@ class Building(object):
         self.print_allocation(self.allocated_living_spaces)
 
     def print_unallocated_employees(self):
-        """Prints unallocated employees"""
-        if len(self.get_list_of_office_allocations()[1]) == 0:
-            print "None is unallocated"
-        else:
-            print "some are unallocated"
+        if len(self.office_unallocated) == 0:
+            print "No one missed an Office Slot\n"
+        if len(self.ls_unallocated) == 0:
+            print "No one missed a Living Space Slot\n"
+        if len(self.office_unallocated) > 0:
+            print "DISCLAIMER:\nOffices are full\n" \
+                "The following {} person(s) have missed slots:".format(len(self.office_unallocated))
+            for emp in self.office_unallocated:
+                print emp.name + ", ",
+        if len(self.ls_unallocated) > 0:
+            print "DISCLAIMER:\nLiving Spaces are full\n" \
+                "The following {} person(s) have missed slots:".format(len(self.ls_unallocated))
+            for emp in self.ls_unallocated:
+                print emp.name + ", ",
+        print "\n"
 
     def print_allocation_for_one_room(self, room_name):
         """Prints allocations for specified room"""
