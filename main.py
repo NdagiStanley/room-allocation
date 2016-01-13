@@ -23,9 +23,10 @@ class Building(object):
     Building is the class for the whole building.
     Amity will be an instance of it, same as Dojo (for Nairobi)
     """
-    def __init__(self, office_names, living_space_names):
+    def __init__(self, office_names, living_space_names, input_file):
         self.living_space_names = living_space_names
         self.office_names = office_names
+        self.input_file = input_file
         self.offices = self.pre_populate("office")
         self.living_spaces = self.pre_populate("ls")
         self.all_employees = self.access_employees()[0]
@@ -42,6 +43,9 @@ class Building(object):
             #class we are dealing with is Office that requires name
             #list of offices (objects)
             rooms = [Office(name) for name in self.office_names]
+
+        else:
+            rooms = [] # Corner case
         return rooms
 
     def access_employees(self):
@@ -49,7 +53,7 @@ class Building(object):
         employees = []
         fellows = []
         staff = []
-        with open("employees.txt") as myfile:
+        with open(self.input_file) as myfile:
             content = myfile.read().splitlines() #contents in one list
         myfile.close()
         for line in xrange(1, len(content)):

@@ -12,10 +12,11 @@ from model import Person, Staff, Fellow, Office, LivingSpace
 
 living_space_names = ['Rm1', 'Rm2', 'Rm3', 'Rm4', 'Rm5', 'Rm6', 'Rm7', 'Rm8', 'Rm9', 'Rm10']
 office_names = ['Hogwarts', 'Valhalla', 'Oculus', 'Krypton', 'Shire', 'Narnia', 'Camelot', 'Mordor', 'Round Table', 'Midgar']
+input_file = "employees.txt"
 
 class Test(unittest.TestCase):
-    """docstring for ClassName"""
-    amity = Building(office_names, living_space_names)
+    """Test"""
+    amity = Building(office_names, living_space_names, input_file)
 
     def test_can_pre_populate(self):
         """
@@ -30,9 +31,13 @@ class Test(unittest.TestCase):
         """
         Tests if employee details in input file are accessed and objects created
         """
+        with open(input_file) as myfile:
+            content = myfile.read().splitlines()
+        self.assertIsNotNone(content)
         self.assertIsNotNone(self.amity.all_employees)
         self.assertIsInstance(self.amity.all_employees[0], Person)
         self.assertEquals('<type \'str\'>', str(type(self.amity.all_employees[0].name)))
+        self.assertEquals('<type \'bool\'>', str(type(self.amity.all_employees[0].is_allocated_office)))
 
     def test_employees_entities_are_valid(self):
         """
@@ -54,8 +59,9 @@ class Test(unittest.TestCase):
         """
         Tests if the allocation of room is presented in the stipulated format
         """
-        # self.assertEquals('<type \'list\'>', str(type(self.amity.allocated_offices.keys()[:])))
-        # self.assertEquals('<type \'str\'>', len(self.amity.allocated_offices.keys()[0]))
+        allocated_offices = self.amity.allocate_room(self.amity.all_employees, self.amity.offices)
+        self.assertEquals('<type \'list\'>', str(type(allocated_offices.keys()[:])))
+        self.assertEquals('<type \'str\'>', str(type(allocated_offices.keys()[0])))
 
 
 if __name__ == '__main__':
