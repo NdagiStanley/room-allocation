@@ -12,8 +12,8 @@ from model.model import Person, Staff, Fellow, Room, Office, LivingSpace
 
 living_space_names = ['Rm1', 'Rm2', 'Rm3', 'Rm4', 'Rm5', 'Rm6', 'Rm7', 'Rm8', 'Rm9', 'Rm10']
 office_names = ['Hogwarts', 'Valhalla', 'Oculus', 'Krypton', 'Shire', 'Narnia', 'Camelot', 'Mordor', 'Round Table', 'Midgar']
-input_file = "employees.txt"
-empty_file = "empty_file.txt"
+input_file = "files/employees.txt"
+empty_file = "files/empty_file.txt"
 
 class Test(unittest.TestCase):
     """Setup before the Test"""

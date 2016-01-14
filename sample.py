@@ -19,7 +19,7 @@ if len(sys.argv) > 1:
     file_name = sys.argv[1]
 
 else:
-    file_name = "employees.txt"
+    file_name = "files/employees.txt"
 
 if __name__ == '__main__':
     amity = Building(office_names, living_space_names, file_name)

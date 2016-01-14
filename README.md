@@ -11,6 +11,8 @@ To clone the repo ```git clone https://github.com/andela-sndagi/room-allocation.
 ```pip install -r requirements.txt```
 2. RUN
 ```$ python sample.py ```
+or
+```$ python sample.py 'file'``` 'file' here should be in the parent directory
 3. TEST
 ```$ nosetests```
 4. Check the COVERAGE of the tests
