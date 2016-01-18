@@ -90,10 +90,8 @@ class Building(object):
         """Allocates the room receiving randomized person and room type"""
         allocated_room = {} # Holds allocated room
         unallocated = []
-        count = 0
         room_index = 0
-        for employee in employees:
-            count += 1
+        for index, employee in enumerate(employees):
             allocated_room.update(
                 {
                     room[room_index].name : room[room_index].add_person(employee)
@@ -101,7 +99,7 @@ class Building(object):
             if room[room_index].is_full():
                 room_index += 1
                 if room_index >= len(room): #len(room)
-                    for employee in employees[count-1:]:
+                    for employee in employees[index :]:
                         unallocated.append(employee)
                     break
         return allocated_room, unallocated
@@ -128,7 +126,7 @@ class Building(object):
         """Presents the allocation of room in the stipulated format"""
         room_names = allocated_rooms.keys()
         for room_name in room_names:
-            if room_names in self.office_names:
+            if room_name in self.office_names:
                 # Prints Name of office
                 print room_name.upper() + " (OFFICE)"
                 #Iterate through the list of occupants

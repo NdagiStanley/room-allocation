@@ -60,6 +60,7 @@ class Test(unittest.TestCase):
         Tests if the allocation of room works receiving randomized room and randomized person
         """
         self.assertIsNotNone(self.amity.allocate_room(self.amity.all_employees, self.amity.offices)[0].keys())
+        self.assertIsNotNone(self.amity.allocate_room(self.amity.fellows, self.amity.living_spaces)[0].keys())
         self.assertIsInstance(self.amity.offices[0], Office)
         self.assertIsInstance(self.amity.living_spaces[0], LivingSpace)
 
