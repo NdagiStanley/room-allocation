@@ -15,7 +15,8 @@ parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
 """importing from model.py"""
-from model.model import Office, LivingSpace, Fellow, Staff
+from .person import Fellow, Staff
+from .room import LivingSpace, Office
 import random
 
 """
