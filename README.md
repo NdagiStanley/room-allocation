@@ -16,7 +16,7 @@ or
 3. TEST
 ```$ nosetests```
 4. Check the COVERAGE of the tests
-```coverage run tests/test_main.py``` and
+```coverage run tests/test_building.py``` and
 ```coverage report```
 
 Copyright (c) 2016
