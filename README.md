@@ -5,7 +5,7 @@
 
 This is a Room Allocation program. In this repository the building has 10 offices and 10 Living spaces, which are first of all pre-populated and then accepts an input text file with the names of those to be allocated and randomly allocates them to the offices and Living spaces. Those not allocated space are then returned.
 
-To clone the repo ```git clone https://github.com/andela-sndagi/room-allocation.git``` in the terminal
+To clone the repo ```git clone https://github.com/NdagiStanley/room-allocation.git``` in the terminal
 
 Create a virtual environment using [virtualenv](https://virtualenv.readthedocs.org/en/latest/) or [virtualenvwrapper](https://virtualenvwrapper.readthedocs.org/en/latest/) and do the following in it.
 
