@@ -7,8 +7,9 @@
 # version        :0.0.1
 # python_version :2.7.10
 # ==============================================================================
-import os, sys
 import inspect
+import random
+import os, sys
 currentdir = os.path.dirname(os.path.abspath(
     inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
@@ -17,11 +18,10 @@ sys.path.insert(0, parentdir)
 """importing from model.py"""
 from .person import Fellow, Staff
 from .room import LivingSpace, Office
-import random
 
 """
 The following are lists
-They are names of the Living spaces and the Offices at Dojo (we'll use them as Amity's)
+They are names of the Living spaces and the Offices at Dojo
 One could edit them to desirable names
 """
 
@@ -29,7 +29,7 @@ One could edit them to desirable names
 class Building(object):
     """
     Building is the class for the whole building.
-    Amity will be an instance of it, same as Dojo (for Nairobi)
+    Dojo will be an instance of it
     """
     def __init__(self, office_names, living_space_names, input_file):
         self.living_space_names = living_space_names
@@ -164,12 +164,12 @@ class Building(object):
             if len(self.ls_unallocated) == 0:
                 print "No one missed a Living Space Slot\n"
             if len(self.office_unallocated) > 0:
-                print "DISCLAIMER:\nOffices are full\n" \
+                print "DISCLAIMER:\nOffices are full!\n" \
                     "The following {} person(s) have missed slots:".format(len(self.office_unallocated))
                 for emp in self.office_unallocated:
                     print emp.name + ", ",
             if len(self.ls_unallocated) > 0:
-                print "DISCLAIMER:\nLiving Spaces are full\n" \
+                print "DISCLAIMER:\nLiving Spaces are full!\n" \
                     "The following {} person(s) have missed slots:".format(len(self.ls_unallocated))
                 for emp in self.ls_unallocated:
                     print emp.name + ", ",
@@ -178,7 +178,7 @@ class Building(object):
     def print_allocation_for_one_room(self, room_name):
         """Prints allocations for specified room"""
         if room_name in self.office_names: #Is the room name entered in the list of offices
-            print "\nThis is an office"
+            print "\nThis is an Office"
             if room_name in self.allocated_offices.keys():
             #Is the room name entered in the list of allocated offices
                 print room_name + ": "
@@ -189,7 +189,7 @@ class Building(object):
                 print room_name + " is not allocated anyone."
 
         elif room_name in self.living_space_names:
-            print "\nThis is an Living Space"
+            print "\nThis is a Living Space"
             if room_name in self.allocated_living_spaces.keys():
                 print room_name + ": "
                 for occupants in self.allocated_living_spaces[room_name]:

@@ -22,9 +22,9 @@ else:
     file_name = "files/employees.txt"
 
 if __name__ == '__main__':
-    amity = Building(office_names, living_space_names, file_name)
-    amity.print_office_allocation()
-    amity.print_living_space_allocation()
-    amity.print_unallocated_employees()
-    amity.print_allocation_for_one_room('Shire')
-    amity.print_allocation_for_one_room('Rm1')
+    dojo = Building(office_names, living_space_names, file_name)
+    dojo.print_office_allocation()
+    dojo.print_living_space_allocation()
+    dojo.print_unallocated_employees()
+    dojo.print_allocation_for_one_room('Shire')
+    dojo.print_allocation_for_one_room('Rm1')
