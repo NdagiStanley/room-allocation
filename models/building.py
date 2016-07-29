@@ -150,6 +150,7 @@ class Building(object):
                     print " " + occupants.name + ",",
                 print ""
         print "\n"
+        return allocated_rooms[room_name]  # For testing purposes
 
     def print_office_allocation(self):
         """Prints out the offices"""

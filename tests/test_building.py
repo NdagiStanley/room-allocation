@@ -21,74 +21,74 @@ empty_file = "files/empty_file.txt"
 class Test(unittest.TestCase):
     """Setup before the Test"""
     def setUp(self):
-        self.amity = Building(office_names, living_space_names, input_file)
+        self.dojo = Building(office_names, living_space_names, input_file)
         self.allocated_offices, self.office_unallocated \
-            = self.amity.allocate_room(self.amity.all_employees,
-                self.amity.offices)
+            = self.dojo.allocate_room(self.dojo.all_employees,
+                self.dojo.offices)
         self.allocated_living_spaces, self.ls_unallocated \
-            = self.amity.allocate_room(self.amity.fellows,
-                self.amity.living_spaces)
-        self.amity.print_office_allocation()
-        self.amity.print_living_space_allocation()
+            = self.dojo.allocate_room(self.dojo.fellows,
+                self.dojo.living_spaces)
+        self.dojo.print_office_allocation()
+        self.dojo.print_living_space_allocation()
 
 
     def test_can_pre_populate(self):
         """
         Test if offices and living space can be prepopulated
         """
-        self.assertIsInstance(self.amity.offices[4], Room)
-        self.assertEquals('Shire', self.amity.offices[4].name)
-        self.assertEquals(len(self.amity.offices), 10)
-        self.assertEquals('Rm1', self.amity.living_spaces[0].name)
-        self.assertEquals(len(self.amity.living_spaces), 10)
+        self.assertIsInstance(self.dojo.offices[4], Room)
+        self.assertEquals('Shire', self.dojo.offices[4].name)
+        self.assertEquals(len(self.dojo.offices), 10)
+        self.assertEquals('Rm1', self.dojo.living_spaces[0].name)
+        self.assertEquals(len(self.dojo.living_spaces), 10)
         self.assertEquals('<type \'bool\'>',
-            str(type(self.amity.living_spaces[0].is_full())))
-        self.assertIsNotNone(self.amity.offices[6].get_occupants())
+            str(type(self.dojo.living_spaces[0].is_full())))
+        self.assertIsNotNone(self.dojo.offices[6].get_occupants())
 
     def test_can_access_employees_from_input(self):
         """
         Tests if employee details in input file are accessed and objects created
         """
-        self.assertIsNotNone(self.amity.all_employees)
-        self.assertIsInstance(self.amity.all_employees[0], Person)
+        self.assertIsNotNone(self.dojo.all_employees)
+        self.assertIsInstance(self.dojo.all_employees[0], Person)
         self.assertEquals('<type \'str\'>',
-            str(type(self.amity.all_employees[0].name)))
+            str(type(self.dojo.all_employees[0].name)))
         self.assertEquals('<type \'bool\'>',
-            str(type(self.amity.all_employees[0].is_allocated_office)))
-        self.amity = Building(office_names, living_space_names, empty_file)
-        self.assertEquals(False, self.amity.access_employees()[0])
+            str(type(self.dojo.all_employees[0].is_allocated_office)))
+        self.dojo = Building(office_names, living_space_names, empty_file)
+        self.assertEquals(False, self.dojo.access_employees()[0])
 
     def test_employees_entities_are_valid(self):
         """
         Tests if the types of employees are correct
         the Y or N are taken in for fellow
         """
-        self.assertIsInstance(self.amity.fellows[0], Fellow)
-        self.assertEquals('Y', self.amity.fellows[0].is_interested)
+        self.assertIsInstance(self.dojo.fellows[0], Fellow)
+        self.assertEquals('Y', self.dojo.fellows[0].is_interested)
 
     def test_allocate_room(self):
         """
         Tests if the allocation of room works
         receiving randomized room and randomized person
         """
-        self.assertIsNotNone(self.amity.allocate_room(self.amity.all_employees,
-            self.amity.offices)[0].keys())
-        self.assertIsNotNone(self.amity.allocate_room(self.amity.fellows,
-            self.amity.living_spaces)[0].keys())
-        self.assertIsInstance(self.amity.offices[0], Office)
-        self.assertIsInstance(self.amity.living_spaces[0], LivingSpace)
+        self.assertIsNotNone(self.dojo.allocate_room(self.dojo.all_employees,
+            self.dojo.offices)[0].keys())
+        self.assertIsNotNone(self.dojo.allocate_room(self.dojo.fellows,
+            self.dojo.living_spaces)[0].keys())
+        self.assertIsInstance(self.dojo.offices[0], Office)
+        self.assertIsInstance(self.dojo.living_spaces[0], LivingSpace)
 
     def test_get_list_of_office_allocations(self):
         """
         Tests if the allocation of Office is okay
         """
-        self.assertIsNotNone(self.amity.get_list_of_office_allocations())
+        self.assertIsNotNone(self.dojo.get_list_of_office_allocations())
 
     def test_get_list_of_living_space_allocations(self):
         """
         Tests if the allocation of Living Space is okay
         """
-        self.assertIsNotNone(self.amity.get_list_of_living_space_allocations())
+        self.assertIsNotNone(self.dojo.get_list_of_living_space_allocations())
 
     def test_print_room_allocation(self):
         """
@@ -102,9 +102,10 @@ class Test(unittest.TestCase):
             str(type(self.allocated_living_spaces.keys()[:])))
         self.assertEquals('<type \'str\'>',
             str(type(self.allocated_living_spaces.keys()[0])))
-        self.assertIsInstance(self.amity.print_allocation(
+        print self.allocated_living_spaces
+        self.assertIsInstance(self.dojo.print_allocation(
             self.allocated_living_spaces)[0], Fellow)
-        self.assertIsInstance(self.amity.print_allocation(
+        self.assertIsInstance(self.dojo.print_allocation(
             self.allocated_offices)[0], Person)
 
     def test_print_unallocated_employees(self):
@@ -114,7 +115,7 @@ class Test(unittest.TestCase):
         self.assertEquals('<type \'list\'>', str(type(self.office_unallocated)))
         self.assertEquals(self.office_unallocated, [])
         self.assertIsInstance(self.ls_unallocated[0], Fellow)
-        self.assertIsNone(self.amity.print_unallocated_employees())
+        self.assertIsNone(self.dojo.print_unallocated_employees())
 
     def test_allocation_of_one_room(self):
         """
@@ -123,11 +124,11 @@ class Test(unittest.TestCase):
         self.assertIsInstance(self.allocated_offices["Shire"][0], Person)
         self.assertIsInstance(self.allocated_living_spaces["Rm1"][0], Fellow)
         self.assertEquals('Invalid',
-            self.amity.print_allocation_for_one_room('abcd'))
+            self.dojo.print_allocation_for_one_room('abcd'))
         self.assertEquals('Office allocated',
-            self.amity.print_allocation_for_one_room('Hogwarts'))
+            self.dojo.print_allocation_for_one_room('Hogwarts'))
         self.assertEquals('LS allocated',
-            self.amity.print_allocation_for_one_room('Rm1'))
+            self.dojo.print_allocation_for_one_room('Rm1'))
 
 
 if __name__ == '__main__':
