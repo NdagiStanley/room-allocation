@@ -1,10 +1,10 @@
 """
-    Model for the rooms at the building (Amity)
+Model for the rooms at the building (Amity)
 """
 class Room(object):
     """Room represents a Room in the building"""
 
-    def __init__(self, name): #It has to have a name
+    def __init__(self, name):  # It has to have a name
         self.name = name
         self.max_occupants = 4
         self.occupants = []
@@ -30,10 +30,12 @@ class Room(object):
 class Office(Room):
     """Office is a Room (inherits from Room)"""
     def __init__(self, name):
-        super(Office, self).__init__(name) #Room initialize with its Room.__init__
+        # Room initialize with its Room.__init__
+        super(Office, self).__init__(name)
         self.max_occupants = 6
 
 class LivingSpace(Room):
     """LivingSpace is a Room"""
     def __init__(self, name):
-        super(LivingSpace, self).__init__(name) #Room initialize with its Room.__init__
+        # Room initialize with its Room.__init__
+        super(LivingSpace, self).__init__(name)

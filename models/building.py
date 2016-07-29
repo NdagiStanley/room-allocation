@@ -6,7 +6,7 @@
 # date           :20160108
 # version        :0.0.1
 # python_version :2.7.10
-# ==============================================================================
+# =====================================================================
 import inspect
 import random
 import os, sys
@@ -15,7 +15,7 @@ currentdir = os.path.dirname(os.path.abspath(
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
-"""importing from model.py"""
+# importing from model.py
 from .person import Fellow, Staff
 from .room import LivingSpace, Office
 
@@ -73,7 +73,10 @@ class Building(object):
             person = line.split('.')[0].split()
             name = person[0] + " " + person[1]
             role = person[2]
-            #Create Person with the items as arguments, the first two join to make one name
+            """
+            Create Person with the items as arguments,
+            the first two join to make one name
+            """
             if role == 'Fellow':
                 wants_accomodation = person[3]
                 employee = Fellow(name, wants_accomodation)
@@ -82,9 +85,12 @@ class Building(object):
             elif role == 'Staff':
                 employee = Staff(name)
             employees.append(employee)
-        random.shuffle(employees) #For random picking of employees
+        random.shuffle(employees)  # For random picking of employees
         random.shuffle(fellows)
-        #Returns a list of all employees, call either of the indices to have a list of them
+        """
+        Returns a list of all employees,
+        call either of the indices to have a list of them
+        """
         return [employees, fellows]
 
     def allocate_room(self, employees, room):
@@ -95,7 +101,7 @@ class Building(object):
         for index, employee in enumerate(employees):
             allocated_room.update(
                 {
-                    room[room_index].name : room[room_index].add_person(employee)
+                    room[room_index].name: room[room_index].add_person(employee)
                 })
             if room[room_index].is_full():
                 room_index += 1
@@ -110,9 +116,11 @@ class Building(object):
         Office Allocations
         Below, allocated room is returned
         It is a dictionary with room name as key, list of occupants as values
-        NB: The list of occupants is also a list of strings (names of allocated employees)
+        NB: The list of occupants is also a list of strings
+            (names of allocated employees)
         """
-        allocated_offices, self.office_unallocated = self.allocate_room(self.all_employees, self.offices)
+        allocated_offices, self.office_unallocated = self.allocate_room(
+            self.all_employees, self.offices)
         return allocated_offices
 
     def get_list_of_living_space_allocations(self):
@@ -120,7 +128,8 @@ class Building(object):
         Living Space Allocations
         Similar to get_list_of_office_allocations()
         """
-        allocated_living_spaces, self.ls_unallocated = self.allocate_room(self.fellows, self.living_spaces)
+        allocated_living_spaces, self.ls_unallocated = self.allocate_room(
+            self.fellows, self.living_spaces)
         return allocated_living_spaces
 
     def print_allocation(self, allocated_rooms):
@@ -130,7 +139,7 @@ class Building(object):
             if room_name in self.office_names:
                 # Prints Name of office
                 print room_name.upper() + " (OFFICE)"
-                #Iterate through the list of occupants
+                # Iterate through the list of occupants
                 for occupants in allocated_rooms[room_name]:
                     print " " + occupants.name + ",",
                 print ""
@@ -141,7 +150,6 @@ class Building(object):
                     print " " + occupants.name + ",",
                 print ""
         print "\n"
-        return allocated_rooms[room_name] #For testing purposes
 
     def print_office_allocation(self):
         """Prints out the offices"""
@@ -165,22 +173,25 @@ class Building(object):
                 print "No one missed a Living Space Slot\n"
             if len(self.office_unallocated) > 0:
                 print "DISCLAIMER:\nOffices are full!\n" \
-                    "The following {} person(s) have missed slots:".format(len(self.office_unallocated))
+                    "The following {} person(s) have missed slots:".format(
+                        len(self.office_unallocated))
                 for emp in self.office_unallocated:
                     print emp.name + ", ",
             if len(self.ls_unallocated) > 0:
                 print "DISCLAIMER:\nLiving Spaces are full!\n" \
-                    "The following {} person(s) have missed slots:".format(len(self.ls_unallocated))
+                    "The following {} person(s) have missed slots:".format(
+                        len(self.ls_unallocated))
                 for emp in self.ls_unallocated:
                     print emp.name + ", ",
             print "\n"
 
     def print_allocation_for_one_room(self, room_name):
         """Prints allocations for specified room"""
-        if room_name in self.office_names: #Is the room name entered in the list of offices
+        if room_name in self.office_names:
+            # Is the room name entered in the list of offices
             print "\nThis is an Office"
             if room_name in self.allocated_offices.keys():
-            #Is the room name entered in the list of allocated offices
+            # Is the room name entered in the list of allocated offices
                 print room_name + ": "
                 for occupants in self.allocated_offices[room_name]:
                     print occupants.name + ", ",
