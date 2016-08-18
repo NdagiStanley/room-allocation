@@ -4,9 +4,12 @@
 [![Coverage Status](https://coveralls.io/repos/andela-sndagi/room-allocation/badge.svg?branch=develop&service=github)](https://coveralls.io/github/andela-sndagi/room-allocation?branch=develop)
 [![Code Issues](https://www.quantifiedcode.com/api/v1/project/192254c3314e40179b60d59b8d323579/badge.svg)](https://www.quantifiedcode.com/app/project/192254c3314e40179b60d59b8d323579)
 
-This is a Room Allocation program. In this repository the building has 10 offices and 10 Living spaces, which are first of all pre-populated and then accepts an input text file with the names of those to be allocated and randomly allocates them to the offices and Living spaces. Those not allocated space are then returned.
+> A Room Allocation program
 
-To clone the repo ```git clone https://github.com/NdagiStanley/room-allocation.git``` in the terminal
+In this repository the building has 10 offices and 10 Living spaces, which are first of all pre-populated and then accepts an input text file with the names of those to be allocated and randomly allocates them to the offices and Living spaces. Those not allocated space are then returned.
+
+#### Installation and usage
+RUN ```git clone https://github.com/NdagiStanley/room-allocation.git``` to clone this repo
 
 Create a virtual environment using [virtualenv](https://virtualenv.readthedocs.org/en/latest/) or [virtualenvwrapper](https://virtualenvwrapper.readthedocs.org/en/latest/) and do the following in it.
 
